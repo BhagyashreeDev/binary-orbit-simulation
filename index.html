@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Binary Orbital Mechanics — Two-Body Simulation (B & V)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Fullscreen Physics Canvas -->
+  <canvas id="canvas"></canvas>
+
+  <!-- Atmospheric Vignette -->
+  <div class="vignette"></div>
+
+  <!-- Technical / Header Overlay -->
+  <header class="poetic-header">
+    <div class="badge">Two-Body Gravitational Dynamics</div>
+    <h1 id="chapter-title">Phase I: Stable Elliptical Orbit</h1>
+    <p id="poetic-quote" class="quote">Gravitational coupling between Body B (warm) and Body V (cool) in barycentric motion.</p>
+  </header>
+
+  <!-- Particle Text Projection Modal -->
+  <div id="whisper-modal" class="modal hidden">
+    <div class="modal-card">
+      <button id="modal-close" class="close-btn" title="Close">&times;</button>
+      <h2>Project Text into Particle Field</h2>
+      <p class="modal-desc">Type any text or log entry below. The string will rasterize and disperse into coordinate-driven stardust particles across the gravitational simulation.</p>
+      <textarea id="whisper-input" placeholder="Enter text to disperse into coordinate particles..." rows="4"></textarea>
+      <div class="modal-actions">
+        <button id="dissolve-btn" class="btn btn-primary">Disperse Particles</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Telemetry HUD & Control Panel -->
+  <aside class="control-panel glass-panel">
+    <div class="panel-section header-section">
+      <div class="panel-title-row">
+        <span class="dot live-pulse"></span>
+        <span class="system-status" id="system-status">Coupled Orbit</span>
+      </div>
+      <div class="metric-row">
+        <span>Bodies</span>
+        <span class="tech-tag">B (Warm) & V (Cool)</span>
+      </div>
+      <div class="metric-row">
+        <span>Distance (r)</span>
+        <span id="metric-dist">180 AU</span>
+      </div>
+      <div class="metric-row">
+        <span>Kinematic State</span>
+        <span id="metric-force">Stable Barycenter</span>
+      </div>
+    </div>
+
+    <!-- Orbital Trajectory Profiles -->
+    <div class="panel-section">
+      <label class="section-label">Trajectory Profile</label>
+      <div class="state-buttons">
+        <button id="btn-state-orbit" class="btn btn-pill active" data-state="orbit">1. Stable Orbit</button>
+        <button id="btn-state-tension" class="btn btn-pill" data-state="tension">2. High Pull</button>
+        <button id="btn-state-letgo" class="btn btn-pill btn-highlight" data-state="letgo">3. Escape Drift</button>
+        <button id="btn-state-solitude" class="btn btn-pill" data-state="solitude">4. Body B Center</button>
+      </div>
+    </div>
+
+    <!-- Physics Parameters -->
+    <div class="panel-section sliders-section">
+      <label class="section-label">Simulation Constants</label>
+      
+      <div class="slider-group">
+        <div class="slider-label-row">
+          <span>Gravity Constant (G)</span>
+          <span id="val-gravity">1.0x</span>
+        </div>
+        <input type="range" id="slider-gravity" min="0.1" max="2.5" step="0.05" value="1.0">
+      </div>
+
+      <div class="slider-group">
+        <div class="slider-label-row">
+          <span>Trail Persistence</span>
+          <span id="val-trail">Long</span>
+        </div>
+        <input type="range" id="slider-trail" min="0.01" max="0.15" step="0.01" value="0.04">
+      </div>
+
+      <div class="slider-group">
+        <div class="slider-label-row">
+          <span>Time Scale (dt)</span>
+          <span id="val-speed">1.0x</span>
+        </div>
+        <input type="range" id="slider-speed" min="0.2" max="2.0" step="0.1" value="1.0">
+      </div>
+    </div>
+
+    <!-- Operations & Audio -->
+    <div class="panel-section actions-section">
+      <button id="btn-open-whisper" class="btn btn-secondary full-width">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+        </svg>
+        Disperse Text Particles
+      </button>
+
+      <div class="button-row">
+        <button id="btn-sound" class="btn btn-icon" title="Toggle Resonant Frequency Audio">
+          <span id="sound-icon">🔇</span>
+          <span id="sound-text">Audio Off</span>
+        </button>
+        <button id="btn-reset" class="btn btn-icon" title="Reset Orbital State">
+          ↺ Reset
+        </button>
+      </div>
+    </div>
+
+    <!-- Instruction Footer -->
+    <div class="hint-text">
+      <span>✦ Left-click / touch and drag either body to perturb orbit</span><br>
+      <span>✦ Click empty space to inject test particle mass</span>
+    </div>
+  </aside>
+
+  <!-- Standard Technical Legend -->
+  <footer class="star-legend">
+    <div class="legend-item you-legend">
+      <span class="legend-swatch swatch-you"></span>
+      <span class="legend-title">Body B (Warm)</span>
+      <span class="legend-sub">Mass: 1200 · Solar Core</span>
+    </div>
+    <div class="legend-divider">|</div>
+    <div class="legend-item him-legend">
+      <span class="legend-swatch swatch-him"></span>
+      <span class="legend-title">Body V (Cool)</span>
+      <span class="legend-sub">Mass: 500 · Secondary Companion</span>
+    </div>
+  </footer>
+
+  <script src="simulation.js"></script>
+</body>
+</html>
