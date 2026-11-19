@@ -1,5 +1,8 @@
 # Binary Orbital Mechanics — Two-Body Gravitational Simulation
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-2563eb?style=for-the-badge&logo=github)](https://bhagyashreedev.github.io/binary-orbit-simulation/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-emerald?style=for-the-badge)](LICENSE)
+
 An interactive, high-performance two-body orbital mechanics simulation built from scratch using pure **HTML5 Canvas**, **Vanilla JavaScript**, and the **Web Audio API**.
 
 The project simulates the gravitational interaction between two celestial bodies—**Body B (Warm)** and **Body V (Cool)**—allowing users to explore orbital kinematics, momentum conservation, and escape trajectories in real time.
@@ -90,19 +93,24 @@ The simulation is powered by fundamental celestial mechanics:
 
 ---
 
-## 🚀 How to Run Locally
+## 🚀 How to Run
 
-No installations, build steps, or servers are needed!
+### Option 1: Live in Browser (Instant)
+Click to launch the live simulation on GitHub Pages:  
+👉 **[https://bhagyashreedev.github.io/binary-orbit-simulation/](https://bhagyashreedev.github.io/binary-orbit-simulation/)**
 
-1. **Clone or Download** this repository:
+### Option 2: Run Locally
+No build tools, package managers, or local servers are required!
+
+1. **Clone this repository**:
    ```bash
-   git clone https://github.com/BhagyashreeDev/canvas-gravity-mesh.git
+   git clone https://github.com/BhagyashreeDev/binary-orbit-simulation.git
    ```
-2. Navigate to the project directory:
+2. **Navigate into the project**:
    ```bash
-   cd canvas-gravity-mesh/binary-orbit-simulation
+   cd binary-orbit-simulation
    ```
-3. Open **`index.html`** in any modern web browser (Google Chrome, Firefox, Safari, Microsoft Edge).
+3. **Launch**: Double-click **`index.html`** or open it directly in any modern web browser (Google Chrome, Mozilla Firefox, Microsoft Edge, Safari).
 
 ---
 
