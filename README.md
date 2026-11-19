@@ -1,8 +1,5 @@
 # Binary Orbital Mechanics — Two-Body Gravitational Simulation
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-2563eb?style=for-the-badge&logo=github)](https://bhagyashreedev.github.io/binary-orbit-simulation/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-emerald?style=for-the-badge)](LICENSE)
-
 An interactive, high-performance two-body orbital mechanics simulation built from scratch using pure **HTML5 Canvas**, **Vanilla JavaScript**, and the **Web Audio API**.
 
 The project simulates the gravitational interaction between two celestial bodies—**Body B (Warm)** and **Body V (Cool)**—allowing users to explore orbital kinematics, momentum conservation, and escape trajectories in real time.
