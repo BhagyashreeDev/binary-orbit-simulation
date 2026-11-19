@@ -6,6 +6,13 @@ The project simulates the gravitational interaction between two celestial bodies
 
 ---
 
+## 🌐 Live Demo
+
+Experience the interactive simulation live in your web browser:  
+👉 **[https://bhagyashreedev.github.io/binary-orbit-simulation/](https://bhagyashreedev.github.io/binary-orbit-simulation/)**
+
+---
+
 ## 🌌 Overview
 
 In astrophysics, the **Two-Body Problem** predicts the motion of two celestial objects that interact only through mutual gravitational attraction. 
